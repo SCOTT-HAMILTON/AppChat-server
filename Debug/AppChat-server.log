@@ -1,0 +1,8 @@
+﻿  main.cpp
+c:\users\scott\documents\visual studio 2015\projects\appchat-server\appchat-server\main.cpp(47): warning C4101: 'type' : variable locale non référencée
+c:\users\scott\documents\visual studio 2015\projects\appchat-server\appchat-server\main.cpp(167): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\scott\documents\visual studio 2015\projects\appchat-server\appchat-server\main.cpp(175): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\scott\documents\visual studio 2015\projects\appchat-server\appchat-server\main.cpp(183): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\scott\documents\visual studio 2015\projects\appchat-server\appchat-server\main.cpp(191): warning C4018: '<' : incompatibilité signed/unsigned
+  AppChat-server.vcxproj -> C:\Users\SCOTT\Documents\Visual Studio 2015\Projects\AppChat-server\Debug\AppChat-server.exe
+  AppChat-server.vcxproj -> C:\Users\SCOTT\Documents\Visual Studio 2015\Projects\AppChat-server\Debug\AppChat-server.pdb (Full PDB)
