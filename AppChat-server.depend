@@ -1,0 +1,211 @@
+# depslib dependency file v1.0
+1493313323 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.cpp
+	"DataType.h"
+
+1492961554 c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.h
+	<string>
+	<vector>
+
+1493316453 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\main.cpp
+	<SFML/Network.hpp>
+	<iostream>
+	<string>
+	<memory>
+	<vector>
+	<stdio.h>
+	"DataType.h"
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network.hpp
+	<SFML/System.hpp>
+	<SFML/Network/Ftp.hpp>
+	<SFML/Network/Http.hpp>
+	<SFML/Network/IpAddress.hpp>
+	<SFML/Network/Packet.hpp>
+	<SFML/Network/Socket.hpp>
+	<SFML/Network/SocketHandle.hpp>
+	<SFML/Network/SocketSelector.hpp>
+	<SFML/Network/TcpListener.hpp>
+	<SFML/Network/TcpSocket.hpp>
+	<SFML/Network/UdpSocket.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Clock.hpp>
+	<SFML/System/Err.hpp>
+	<SFML/System/FileInputStream.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Lock.hpp>
+	<SFML/System/MemoryInputStream.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Sleep.hpp>
+	<SFML/System/String.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Utf.hpp>
+	<SFML/System/Vector2.hpp>
+	<SFML/System/Vector3.hpp>
+
+1486739997 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\config.hpp
+	"TargetConditionals.h"
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\clock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\export.hpp
+	<SFML/Config.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\time.hpp
+	<SFML/System/Export.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\err.hpp
+	<SFML/System/Export.hpp>
+	<ostream>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\fileinputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdio>
+	<string>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\inputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+
+1486740055 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\noncopyable.hpp
+	<SFML/System/Export.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\lock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\memoryinputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Export.hpp>
+	<cstdlib>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\mutex.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\sleep.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\string.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Utf.hpp>
+	<iterator>
+	<locale>
+	<string>
+	<SFML/System/String.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\utf.hpp
+	<SFML/Config.hpp>
+	<algorithm>
+	<locale>
+	<string>
+	<cstdlib>
+	<SFML/System/Utf.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\utf.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\string.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\thread.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+	<SFML/System/Thread.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\thread.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\threadlocal.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\threadlocalptr.hpp
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\threadlocalptr.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\vector2.hpp
+	<SFML/System/Vector2.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\vector2.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\vector3.hpp
+	<SFML/System/Vector3.inl>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\system\vector3.inl
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\ftp.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/TcpSocket.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\export.hpp
+	<SFML/Config.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\tcpsocket.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/Socket.hpp>
+	<SFML/System/Time.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\socket.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/SocketHandle.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<vector>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\sockethandle.hpp
+	<SFML/Config.hpp>
+	<basetsd.h>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\http.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/IpAddress.hpp>
+	<SFML/Network/TcpSocket.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<map>
+	<string>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\ipaddress.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/System/Time.hpp>
+	<istream>
+	<ostream>
+	<string>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\packet.hpp
+	<SFML/Network/Export.hpp>
+	<string>
+	<vector>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\socketselector.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\tcplistener.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/Socket.hpp>
+	<SFML/Network/IpAddress.hpp>
+
+1486739998 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network\udpsocket.hpp
+	<SFML/Network/Export.hpp>
+	<SFML/Network/Socket.hpp>
+	<SFML/Network/IpAddress.hpp>
+	<vector>
+

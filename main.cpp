@@ -7,6 +7,8 @@
 
 #include "DataType.h"
 
+#define SFML_STATIC
+
 using namespace sf;
 
 struct pseudoIp2 {
@@ -34,7 +36,7 @@ int main(int argc, char *argv[]) {
 	std::string dataR(""), typeR("");
 	sendC << dataSConnect;
 	TcpListener listener;
-	
+
 	int i = 0, j = 0;
 	listener.listen(53000);
 
@@ -44,7 +46,6 @@ int main(int argc, char *argv[]) {
 
 	pseudoIp tmpPseudo;
 
-	DataType type;
 	Time timeout = seconds(2);
 	while (true) {
 		if (nb_clients <= 0) {
@@ -114,7 +115,7 @@ int main(int argc, char *argv[]) {
 								send << DataType::pseudoUnavailable << "";
 								(socketClients[i].get())->send(send);
 							}
-							
+
 						}
 
 						if (typeR == DataType::getInitMessages) {
@@ -124,9 +125,9 @@ int main(int argc, char *argv[]) {
 							(socketClients[i].get())->send(send);
 						}
 					}
-					
+
 				}
-				
+
 			}
 		}
 
@@ -153,7 +154,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	
+
 	std::cout << "server closing connexion !" << std::endl;
 
 	listener.close();
@@ -163,7 +164,7 @@ int main(int argc, char *argv[]) {
 }
 
 bool containsPseudo(std::vector<pseudoIp> tab, std::string value) {
-	int i = 0;
+	unsigned int i = 0;
 	for (i = 0; i < tab.size(); i++) {
 		if (tab[i].pseudo == value) return true;
 	}
@@ -171,7 +172,7 @@ bool containsPseudo(std::vector<pseudoIp> tab, std::string value) {
 }
 
 bool containsIp(std::vector<pseudoIp> tab, sf::IpAddress value) {
-	int i = 0;
+	unsigned int i = 0;
 	for (i = 0; i < tab.size(); i++) {
 		if (tab[i].address == value) return true;
 	}
@@ -179,7 +180,7 @@ bool containsIp(std::vector<pseudoIp> tab, sf::IpAddress value) {
 }
 
 std::string getPseudoFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip) {
-	int i = 0;
+	unsigned int i = 0;
 	for (i = 0; i < tab.size(); i++) {
 		if (tab[i].address == ip) return tab[i].pseudo;
 	}
@@ -187,7 +188,7 @@ std::string getPseudoFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip) {
 }
 
 int getIndexFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip) {
-	int i = 0;
+	unsigned int i = 0;
 	for (i = 0; i < tab.size(); i++) {
 		if (tab[i].address == ip) return i;
 	}

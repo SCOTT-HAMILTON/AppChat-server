@@ -6,7 +6,8 @@ std::string DataType::pseudoUnavailable = "Sorry, This pseudo is already use.";
 std::string DataType::pseudoVailable = "You're pseudo has bein register succefully.";
 std::string DataType::initMessagesTxt = "Here is the recent messages send to the server";
 std::string DataType::getInitMessages = "Can I get the last messages send to server please";
-std::vector<std::string> DataType::m_types = std::vector<std::string>{ pseudo, message, pseudoUnavailable, pseudoVailable, initMessagesTxt, getInitMessages };
+std::vector<std::string> DataType::m_types = std::vector<std::string>({pseudo, message, pseudoUnavailable, pseudoVailable, initMessagesTxt, getInitMessages});
+
 
 bool DataType::isType(std::string value){
     unsigned int i = 0;
