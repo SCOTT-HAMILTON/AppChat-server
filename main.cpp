@@ -4,10 +4,9 @@
 #include <memory>
 #include <vector>
 #include <stdio.h>
+#include <RSA-Crypt.h>
 
 #include "DataType.h"
-
-#define SFML_STATIC
 
 using namespace sf;
 
@@ -47,6 +46,11 @@ int main(int argc, char *argv[]) {
 	pseudoIp tmpPseudo;
 
 	Time timeout = seconds(2);
+
+	std::string traduc;
+	unsigned long long int p = 509, q = 9403, d, e, n;
+	getPUKey(p, q, n, e);
+	getPRKey(p, q, n, d);
 	while (true) {
 		if (nb_clients <= 0) {
 			serverChatText = "";
@@ -89,10 +93,12 @@ int main(int argc, char *argv[]) {
 						if (typeR == DataType::message) {
 							send.clear();
 							send << dataR;
-							std::cout << dataR << std::endl;
-							serverChatText += std::string(dataR + '\n');
+                            traduc = decrypt(d, n, FromStr(dataR));
+							std::cout << traduc << std::endl;
+							serverChatText += std::string(dataR+'\n');
 							for (j = 0; j < nb_clients; j++) {
 								if (j != i) {
+                                    std::cout << "data sended ! " << std::endl;
 									(socketClients[j].get())->send(send);
 								}
 							}

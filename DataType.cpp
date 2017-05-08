@@ -11,6 +11,7 @@ std::vector<std::string> DataType::m_types = std::vector<std::string>({pseudo, m
 
 bool DataType::isType(std::string value){
     unsigned int i = 0;
+
     for (i = 0; i < value.size(); i++){
         if (m_types[i] == value)return true;
     }
