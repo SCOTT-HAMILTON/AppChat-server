@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
 							send << dataR;
                             traduc = decrypt(d, n, FromStr(dataR));
 							std::cout << traduc << std::endl;
-							serverChatText += std::string(dataR+'\n');
+							serverChatText += std::string(dataR+ToStr(crypt(n, e, "\n")));
 							for (j = 0; j < nb_clients; j++) {
 								if (j != i) {
                                     std::cout << "data sended ! " << std::endl;
