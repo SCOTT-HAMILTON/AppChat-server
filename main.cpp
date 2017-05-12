@@ -1,12 +1,20 @@
 #include <SFML/Network.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <memory>
 #include <vector>
 #include <stdio.h>
 #include <RSA-Crypt.h>
+#include <cstdlib>
 
 #include "DataType.h"
+
+#if defined(_WIN32)
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif // defined
 
 using namespace sf;
 
@@ -18,16 +26,24 @@ struct pseudoIp2 {
 typedef pseudoIp2 pseudoIp;
 
 int nb_clients = 0;
+std::string serverChatText;
+
 std::vector<std::unique_ptr<TcpSocket>> socketClients;
 std::vector<pseudoIp> clientsPseudo;
 
 bool containsPseudo(std::vector<pseudoIp> tab, std::string value);
 bool containsIp(std::vector<pseudoIp> tab, sf::IpAddress value);
 std::string getPseudoFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip);
+sf::IpAddress getIpFromPseudo(std::vector<pseudoIp> tab, std::string pseudo);
 int getIndexFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip);
 
+int getNb_clients();
+std::string getAllMessages();
+std::vector<pseudoIp> getPseudoIp();
+
+void control();
+
 int main(int argc, char *argv[]) {
-	std::string serverChatText;
 
 	Packet send, receive;
 	Packet sendC, receiveC;
@@ -47,10 +63,12 @@ int main(int argc, char *argv[]) {
 
 	Time timeout = seconds(2);
 
-	std::string traduc;
 	unsigned long long int p = 509, q = 9403, d, e, n;
 	getPUKey(p, q, n, e);
 	getPRKey(p, q, n, d);
+
+	sf::Thread threadControl(&control);
+	threadControl.launch();
 	while (true) {
 		if (nb_clients <= 0) {
 			serverChatText = "";
@@ -61,17 +79,13 @@ int main(int argc, char *argv[]) {
 				dataR = "";
 				typeR = "";
 				receive.clear();
-				std::cout << "receiving data from clients!" << std::endl;
 				if ((socketClients[i].get())->receive(receive) != sf::Socket::Done) {
-					std::cout << "receive data error" << std::endl;
 					nb_clients--;
 					if (containsIp(clientsPseudo, (socketClients[i].get()->getRemoteAddress()))) {
-						std::cout << "Client " << getPseudoFromIp(clientsPseudo, (socketClients[i].get()->getRemoteAddress())) <<" : "<< (socketClients[i].get()->getRemoteAddress()) << " is disconnected !" << std::endl;
 						//erasing pseudo
 						clientsPseudo.erase(clientsPseudo.begin() + getIndexFromIp(clientsPseudo, (socketClients[i].get()->getRemoteAddress())));
 					}
 					else {
-						std::cout << "Client " << (socketClients[i].get()->getRemoteAddress()) << " is disconnected !" << std::endl;
 					}
 					selector.remove((*(socketClients[i].get())));
 					(socketClients[i].get())->disconnect();
@@ -82,9 +96,7 @@ int main(int argc, char *argv[]) {
 						break;
 					}
 					if (dataR == "" && !DataType::isType(typeR)) {
-						std::cout << "invalid data error" << std::endl;
 						nb_clients--;
-						std::cout << "Client " << (socketClients[i].get()->getRemoteAddress()) << " is disconnected !" << std::endl;
 						selector.remove((*(socketClients[i].get())));
 						(socketClients[i].get())->disconnect();
 						socketClients.erase(socketClients.begin() + i);
@@ -93,30 +105,24 @@ int main(int argc, char *argv[]) {
 						if (typeR == DataType::message) {
 							send.clear();
 							send << dataR;
-                            traduc = decrypt(d, n, FromStr(dataR));
-							std::cout << traduc << std::endl;
 							serverChatText += std::string(dataR+ToStr(crypt(n, e, "\n")));
 							for (j = 0; j < nb_clients; j++) {
 								if (j != i) {
-                                    std::cout << "data sended ! " << std::endl;
 									(socketClients[j].get())->send(send);
 								}
 							}
 						}
 						if (typeR == DataType::pseudo) {
-							std::cout << "pseudo type !" << std::endl;
 							tmpPseudo.address = (socketClients[i].get())->getRemoteAddress();
 							tmpPseudo.pseudo = dataR;
 
 							if (!containsPseudo(clientsPseudo, dataR)) {
-								std::cout << "pseudo available" << std::endl;
 								send.clear();
 								send << DataType::pseudoVailable << "";
 								(socketClients[i].get())->send(send);
 								clientsPseudo.push_back(tmpPseudo);
 							}
 							else {
-								std::cout << "pseudo unvailable" << std::endl;
 								send.clear();
 								send << DataType::pseudoUnavailable << "";
 								(socketClients[i].get())->send(send);
@@ -125,7 +131,6 @@ int main(int argc, char *argv[]) {
 						}
 
 						if (typeR == DataType::getInitMessages) {
-							std::cout << "get init messages type" << std::endl;
 							send.clear();
 							send << DataType::initMessagesTxt << serverChatText;
 							(socketClients[i].get())->send(send);
@@ -139,7 +144,6 @@ int main(int argc, char *argv[]) {
 
 		if (selector.isReady(listener)) {
 			if (nb_clients < 30) {
-				std::cout << "accepting client !" << std::endl;
 				nb_clients++;
 				socketClients.push_back(std::unique_ptr<TcpSocket>(new TcpSocket()));
 				if (listener.accept((*(socketClients[nb_clients - 1].get()))) != sf::Socket::Done) {
@@ -152,15 +156,11 @@ int main(int argc, char *argv[]) {
 					(socketClients[nb_clients - 1].get())->receive(receiveC);
 					selector.add((*(socketClients[nb_clients - 1].get())));
 				}
-				std::cout << "one client accepted !" << std::endl;
-			}
-			else {
-				std::cout << "client connection refused, to much clients ! " << std::endl;
 			}
 		}
 	}
 
-
+    threadControl.terminate();
 	std::cout << "server closing connexion !" << std::endl;
 
 	listener.close();
@@ -193,11 +193,75 @@ std::string getPseudoFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip) {
 	return "";
 }
 
+sf::IpAddress getIpFromPseudo(std::vector<pseudoIp> tab, std::string pseudo){
+    unsigned int i = 0;
+	for (i = 0; i < tab.size(); i++) {
+		if (tab[i].pseudo == pseudo) return tab[i].address;
+	}
+	return sf::IpAddress("");
+}
+
+int getNb_clients(){
+    return nb_clients;
+}
+
+std::string getAllMessages(){
+    return serverChatText;
+}
+
+std::vector<pseudoIp> getPseudoIp(){
+    return clientsPseudo;
+}
+
 int getIndexFromIp(std::vector<pseudoIp> tab, sf::IpAddress ip) {
 	unsigned int i = 0;
 	for (i = 0; i < tab.size(); i++) {
 		if (tab[i].address == ip) return i;
 	}
 	return -1;
+}
+
+void control(){
+
+    unsigned long long int p = 509, q = 9403, d, e, n;
+	getPUKey(p, q, n, e);
+	getPRKey(p, q, n, d);
+
+    char tmp[100];
+    std::string bash;
+    std::cout << "entrer une option : " << std::endl;
+
+    bool def = true;
+
+    while (true){
+        std::cin.getline(tmp, sizeof(tmp));
+        bash = std::string(tmp);
+        def = true;
+        if (bash == "s") {
+            std::cout << "nb de client(s) connecte(s) : " << getNb_clients() << std::endl;
+            def = false;
+        }
+        if (bash == "t") {
+            std::cout << decrypt(d, n, FromStr(getAllMessages())) << std::endl;
+            def = false;
+        }
+
+        if (bash == "c"){
+            std::system(CLEAR);
+            def = false;
+        }
+
+        if (def){
+            if (containsIp(getPseudoIp(), IpAddress(bash))){
+            std::cout << "client " << getPseudoFromIp(getPseudoIp(), sf::IpAddress(bash)) << std::endl;
+            }
+            if (containsPseudo(getPseudoIp(), bash)){
+                std::cout << "client " << getIpFromPseudo(getPseudoIp(), bash) << std::endl;
+            }
+        }
+
+
+        std::cout << ">>";
+    }
 }
 

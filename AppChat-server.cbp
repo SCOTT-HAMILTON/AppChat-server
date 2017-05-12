@@ -37,13 +37,19 @@
 			<Add directory="C:/RSA-Crypt/mingw-530_32/include" />
 		</Compiler>
 		<Linker>
-			<Add library="sfml-network-s-d" />
-			<Add library="sfml-system-s-d" />
-			<Add library="winmm" />
-			<Add library="ws2_32" />
 			<Add library="RSA-Crypt" />
 			<Add library="gmpxx" />
 			<Add library="gmp" />
+			<Add library="sfml-graphics-s-d" />
+			<Add library="freetype" />
+			<Add library="jpeg" />
+			<Add library="sfml-window-s-d" />
+			<Add library="gdi32" />
+			<Add library="opengl32" />
+			<Add library="sfml-network-s-d" />
+			<Add library="ws2_32" />
+			<Add library="sfml-system-s-d" />
+			<Add library="winmm" />
 			<Add directory="C:/SFML-2.4.2/CB-MinGW-x86/lib" />
 			<Add directory="C:/RSA-Crypt/mingw-530_32/lib" />
 		</Linker>
