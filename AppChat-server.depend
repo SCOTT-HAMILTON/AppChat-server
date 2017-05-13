@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1494245122 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.cpp
+1494695475 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.cpp
 	"DataType.h"
 
-1492961554 c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.h
+1494693210 c:\users\scott\desktop\language c\c++\sfml\appchat-server\datatype.h
 	<string>
 	<vector>
 
-1494616452 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\main.cpp
+1494698005 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\main.cpp
 	<SFML/Network.hpp>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -15,7 +15,9 @@
 	<vector>
 	<stdio.h>
 	<RSA-Crypt.h>
+	<cstdlib>
 	"DataType.h"
+	"ClientManager.h"
 
 1493126030 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network.hpp
 	<SFML/System.hpp>
@@ -677,4 +679,11 @@
 	<SFML/System/String.hpp>
 	<string>
 	<vector>
+
+1494670212 c:\users\scott\desktop\language c\c++\sfml\appchat-server\clientmanager.h
+	<windows.h>
+	<string>
+
+1494671125 c:\clientmanager\include\clientmanager.h
+	<string>
 

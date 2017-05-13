@@ -9,12 +9,15 @@
 #include <cstdlib>
 
 #include "DataType.h"
+#include "ClientManager.h"
 
 #if defined(_WIN32)
 #define CLEAR "cls"
 #else
 #define CLEAR "clear"
 #endif // defined
+
+#define CONFIG_PATH "config/config.txt"
 
 using namespace sf;
 
@@ -44,7 +47,6 @@ std::vector<pseudoIp> getPseudoIp();
 void control();
 
 int main(int argc, char *argv[]) {
-
 	Packet send, receive;
 	Packet sendC, receiveC;
 	std::string dataSConnect("You're connected to Server !");
@@ -69,6 +71,8 @@ int main(int argc, char *argv[]) {
 
 	sf::Thread threadControl(&control);
 	threadControl.launch();
+	std::string pseudo;
+
 	while (true) {
 		if (nb_clients <= 0) {
 			serverChatText = "";
@@ -112,22 +116,42 @@ int main(int argc, char *argv[]) {
 								}
 							}
 						}
-						if (typeR == DataType::pseudo) {
-							tmpPseudo.address = (socketClients[i].get())->getRemoteAddress();
-							tmpPseudo.pseudo = dataR;
+						if (typeR == DataType::create_client) {
+                            if (!PseudoExist(dataR, CONFIG_PATH)){
+                                pseudo = dataR;
 
-							if (!containsPseudo(clientsPseudo, dataR)) {
-								send.clear();
+                                send.clear();
 								send << DataType::pseudoVailable << "";
 								(socketClients[i].get())->send(send);
-								clientsPseudo.push_back(tmpPseudo);
-							}
+
+                                receive.clear();
+                                (socketClients[i].get())->receive(receive);
+                                receive >> typeR >> dataR;
+								createClient(pseudo, dataR, CONFIG_PATH);
+                            }
 							else {
 								send.clear();
 								send << DataType::pseudoUnavailable << "";
 								(socketClients[i].get())->send(send);
 							}
 
+						}
+
+						if (typeR == DataType::connection_client){
+                            tmpPseudo.pseudo = dataR;
+                            tmpPseudo.address = (socketClients[i].get())->getRemoteAddress();
+                            receive.clear();
+                            (socketClients[i].get())->receive(receive);
+                            receive >> typeR >> dataR;
+                            send.clear();
+                            if (!compare(tmpPseudo.pseudo, dataR, CONFIG_PATH)){
+                                send << DataType::invalid_connection << "";
+								(socketClients[i].get())->send(send);
+                            }else{
+                                send << DataType::valid_connection << "";
+								(socketClients[i].get())->send(send);
+								clientsPseudo.push_back(tmpPseudo);
+                            }
 						}
 
 						if (typeR == DataType::getInitMessages) {
