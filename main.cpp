@@ -10,6 +10,7 @@
 
 #include "DataType.h"
 #include "ClientManager.h"
+#include <stdio.h>
 
 #if defined(_WIN32)
 #define CLEAR "cls"
@@ -17,8 +18,7 @@
 #define CLEAR "clear"
 #endif // defined
 
-#define CONFIG_PATH "config/config.txt"
-
+char *CONFIG_PATH;
 using namespace sf;
 
 struct pseudoIp2 {
@@ -27,6 +27,8 @@ struct pseudoIp2 {
 };
 
 typedef pseudoIp2 pseudoIp;
+
+bool continuer = true;
 
 int nb_clients = 0;
 std::string serverChatText;
@@ -44,17 +46,70 @@ int getNb_clients();
 std::string getAllMessages();
 std::vector<pseudoIp> getPseudoIp();
 
+bool getContinuer();
+void setContinuer(bool value);
+
 void control();
 
 int main(int argc, char *argv[]) {
+    int i = 0;
+    CONFIG_PATH = (char*) malloc(sizeof(char)*100);
+    std::string current_path("");
+    std::string tmp(""), tmp_path(argv[0]);
+    for (i = 0; (unsigned int)i < tmp_path.size(); i++){
+        if (argv[0][i] == '\\' || (int)argv[0][i] == 92){
+            current_path += std::string (tmp+"\\");
+            tmp = "";
+        }else {
+            tmp += argv[0][i];
+        }
+    }
+    sprintf(CONFIG_PATH, "%s%s", current_path.c_str(), "config.appcs_cf");
+
+    if (argv[1] != NULL){
+        std::string file(argv[1]);
+        for (i = 0; (unsigned int)i < file.size(); i++){
+            if (file[i] == '\\' || (int)file[i] == 92){
+                file[i] = '/';
+            }
+        }
+        std::string ext("");
+        i = file.size();
+        bool stop = false;
+        for (i = file.size(); i > 0 && !stop; i--){
+            if (file[i]=='.')stop=true;
+        }for (i = i+2; (unsigned int)i < file.size(); i++)ext+=file[i];
+        if (ext == "appcs_cf" || ext == "txt"){
+            char reponse = 'n';
+            while (reponse != '1' && reponse != '2'){
+                std::cout << "Que voulez vous faire ?\n\n" << "1. lire le fichier\n2. lancer l'aplication avec ce dernier en tant que fichier de configuration ..." << std::endl;
+                std::cin >> reponse;
+                if (reponse != '1' && reponse != '2'){
+                    std::cout << "option invalide, recommencez ...";
+                    std::cin.ignore();
+                    std::cout << std::endl;
+                }
+            }
+            if (reponse == '1'){
+                    std::cout << std::endl << toString((char*)file.c_str()) << std::endl;
+            }
+            if (reponse == '2'){
+                CONFIG_PATH = (char*)file.c_str();
+                system(CLEAR);
+            }
+        }else{
+            std::cout << "extension de fichier non supportee : " << ext << std::endl;
+            std::cin.ignore();
+            return 0;
+        }
+    }
 	Packet send, receive;
 	Packet sendC, receiveC;
 	std::string dataSConnect("You're connected to Server !");
 	std::string dataR(""), typeR("");
 	sendC << dataSConnect;
 	TcpListener listener;
-
-	int i = 0, j = 0;
+	int j = 0;
 	listener.listen(53000);
 
 	SocketSelector selector;
@@ -63,7 +118,7 @@ int main(int argc, char *argv[]) {
 
 	pseudoIp tmpPseudo;
 
-	Time timeout = seconds(2);
+	Time timeout = seconds(1);
 
 	unsigned long long int p = 509, q = 9403, d, e, n;
 	getPUKey(p, q, n, e);
@@ -73,7 +128,7 @@ int main(int argc, char *argv[]) {
 	threadControl.launch();
 	std::string pseudo;
 
-	while (true) {
+	while (continuer) {
 		if (nb_clients <= 0) {
 			serverChatText = "";
 		}
@@ -184,12 +239,11 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-    threadControl.terminate();
+    threadControl.wait();
 	std::cout << "server closing connexion !" << std::endl;
-
 	listener.close();
 
-	getchar();
+	//getchar();
 	return EXIT_SUCCESS;
 }
 
@@ -254,10 +308,10 @@ void control(){
     char tmp[100];
     std::string bash;
     std::cout << "entrer une option : " << std::endl;
-
+    std::cout << ">>";
     bool def = true;
 
-    while (true){
+    while (getContinuer()){
         std::cin.getline(tmp, sizeof(tmp));
         bash = std::string(tmp);
         def = true;
@@ -275,6 +329,10 @@ void control(){
             def = false;
         }
 
+        if (bash == "q"){
+            setContinuer(false);
+        }
+
         if (def){
             if (containsIp(getPseudoIp(), IpAddress(bash))){
             std::cout << "client " << getPseudoFromIp(getPseudoIp(), sf::IpAddress(bash)) << std::endl;
@@ -282,10 +340,20 @@ void control(){
             if (containsPseudo(getPseudoIp(), bash)){
                 std::cout << "client " << getIpFromPseudo(getPseudoIp(), bash) << std::endl;
             }
+            if (PseudoExist(bash, CONFIG_PATH))std::cout << "this pseudo is registered on the server !" << std::endl;
         }
 
 
         std::cout << ">>";
     }
 }
+
+bool getContinuer(){
+    return continuer;
+}
+void setContinuer(bool value){
+    continuer = value;
+}
+
+
 

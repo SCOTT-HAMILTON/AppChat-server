@@ -6,7 +6,7 @@
 	<string>
 	<vector>
 
-1494698005 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\main.cpp
+1496522830 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\main.cpp
 	<SFML/Network.hpp>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -18,6 +18,7 @@
 	<cstdlib>
 	"DataType.h"
 	"ClientManager.h"
+	<stdio.h>
 
 1493126030 c:\sfml-2.4.2\cb-mingw-x86\include\sfml\network.hpp
 	<SFML/System.hpp>
@@ -684,6 +685,9 @@
 	<windows.h>
 	<string>
 
-1494671125 c:\clientmanager\include\clientmanager.h
+1495277235 c:\clientmanager\include\clientmanager.h
 	<string>
+	<fstream>
+
+1495221367 source:c:\users\scott\desktop\language c\c++\sfml\appchat-server\ressource.rc
 
